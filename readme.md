@@ -31,8 +31,8 @@ While lexically the results were similar to the correct translation, they often 
 ### Tested Models
 We tested several models, including GPT-3.5 Turbo, GPT-4, GPT-4o, and GPT-4o-mini. GPT-4o yielded the best results, but it seems that the LLM had some minimal prior knowledge about Aromanian.
 
-### NLLB Approach
-Next, we used NLLB models, which offered the best results overall. The dataset was modified to be more granular, with sentences extracted from the parallel dataset. The model was trained in both directions (ro→rup and rup→ro). Sentences exceeding 1000 tokens were excluded from training. The model was trained for 20,000 steps on a dataset consisting of 27,000 training examples, 95% of which were dictionary words, while the remaining 5% were sentences. 
+### NLLB Approach [^3]
+Next, we used NLLB models, which offered the best results overall. The dataset was modified to be more granular, with sentences extracted from the parallel dataset. The model was trained in both directions (ro→rup and rup→ro) [^4]. Sentences exceeding 1000 tokens were excluded from training. The model was trained for 20,000 steps on a dataset consisting of 27,000 training examples, 95% of which were dictionary words, while the remaining 5% were sentences. 
 
 For testing, we used a dataset with a higher proportion of sentences (about 10%). 
 
@@ -44,11 +44,11 @@ The results for NLLB are as follows:
 | ro → rup   | 5.18 | 22.08 |
 
 ### Fine-Tuning LLMs
-Several sources inspired this attempt to fine-tune LLMs on our dataset. One of them is the English-Kalamang translation project (insert reference). Unlike them, we did not have access to a structured textbook aimed at language learning. Additionally, there were limitations regarding processing power.
+Several sources inspired this attempt to fine-tune LLMs on our dataset. One of them is the English-Kalamang translation project [^5]. Unlike them, we did not have access to a structured textbook aimed at language learning. Additionally, there were limitations regarding processing power.
 
 We primarily relied on Meta's LLaMA models (LLaMA2, LLaMA3, LLaMA3.1, and LLaMA3.2), as well as their Romanian variants, RoLLaMA. The fine-tuning was parameter-efficient, where we trained only the linear layers of the models. Using LoRA and PEFT, we trained quantized versions (4-bit) of the models.
 
-The best results were obtained from OpenLLM-Ro/RoLLaMA3-8b-Instruct with a BLEU score of 1.61. All models were trained for just one epoch but with different learning rates. For this model, we used r=32 and lora_alpha=32. For LLaMA2, we used r=16 and lora_alpha=32. The BLEU score for LLaMA2 was around 1.4.
+The best results were obtained from OpenLLM-Ro/RoLLaMA3-8b-Instruct [^2] with a BLEU score of 1.61. All models were trained for just one epoch but with different learning rates. For this model, we used r=32 and lora_alpha=32. For LLaMA2, we used r=16 and lora_alpha=32. The BLEU score for LLaMA2 was around 1.4.
 
 As the large parameter models trained with LoRA and PEFT did not perform well, we also tried smaller models. However, the dataset was not sufficient even for the smaller models to learn using parameter-efficient methods. For LLaMA3.2 1B, the BLEU score was 0.59 and chrF2 was 8.83. 
 
@@ -65,3 +65,11 @@ Despite some promising results, the models still have room for improvement, espe
 ## References
 
 [^1]: Nicolae Saramandu, *Aromânii. Istorie, Literatură. Scrieri despre Dialectul Aromân*, [link to the article](https://lingv.ro/wp-content/uploads/2024/06/Art_10_NICOLAE-SARAMANDU-Aromanii_177-206.pdf).
+
+[^2]: Mihai Masala, Denis C. Ilie-Ablachim, Alexandru Dima, Dragos Corlatescu, Miruna Zavelca, Ovio Olaru, Simina Terian-Dan, Andrei Terian-Dan, Marius Leordeanu, Horia Velicu, Marius Popescu, Mihai Dascalu, and Traian Rebedea. *"Vorbești Românește? A Recipe to Train Powerful Romanian LLMs with English Instructions"*. 2024. [arXiv:2406.18266](https://arxiv.org/abs/2406.18266).
+
+[^3]: Koishekenov, Yeskendir, Alexandre Berard, and Vassilina Nikoulina. *Memory-efficient NLLB-200: Language-specific Expert Pruning of a Massively Multilingual Machine Translation Model*. In *Proceedings of the 61st Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers)*, edited by Anna Rogers, Jordan Boyd-Graber, and Naoaki Okazaki, 3567-3585. Toronto, Canada: Association for Computational Linguistics, 2023. [Link to paper](https://aclanthology.org/2023.acl-long.198), doi: [10.18653/v1/2023.acl-long.198](https://doi.org/10.18653/v1/2023.acl-long.198).
+
+[^4]: David Dale. *How to Fine-Tune a NLLB-200 Model for Translating a New Language*. Medium, July 6, 2023. [Link to article](https://cointegrated.medium.com/how-to-fine-tune-a-nllb-200-model-for-translating-a-new-language-a37fc706b865).
+
+[^5]: Tanzer, Garrett, Mirac Suzgun, Eline Visser, Dan Jurafsky, and Luke Melas-Kyriazi. *A Benchmark for Learning to Translate a New Language from One Grammar Book*. 2024. [arXiv:2309.16575](https://arxiv.org/abs/2309.16575).
