@@ -28,6 +28,8 @@ We then created a dictionary of words to facilitate future work. The dictionary 
 ### Similarity Measures
 In addition to direct translations, we added methods to the dictionary for obtaining similar words based on Levenshtein distance or other metrics such as Euclidean and Cosine distances between the Romanian word and its Aromanian counterpart.
 
+When querying the dictionary, there are multiple translation methods available. If a direct translation exists in the Cunia dictionary, it will be provided. Alternatively, the dictionary can offer a translation based on a predefined similarity threshold. This threshold ensures that the returned word has a high degree of similarity to the queried word, minimizing the chance of returning dissimilar words. Users can also customize the similarity threshold to better suit their specific needs, allowing for more flexible or stricter translation results depending on the context.
+
 ### Graph-Based RAG Translation [^6]
 Retrieval-Augmented Generation (RAG) is a technique that enhances language models by combining them with a retrieval mechanism. This approach uses external data sources, such as databases or graphs, to generate more accurate responses by fetching relevant information based on a query. For our project, we applied a graph-based database to assist with the translation of Aromanian to Romanian.
 
