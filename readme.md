@@ -7,6 +7,13 @@ This repository contains our journey in attempting to translate a low-resource l
 ### Part-of-Speech Tagging Attempts
 We began this project by attempting to label parts of speech in Aromanian using existing models for Romanian. The results turned out to be inefficient in practice due to the differences between the two languages.
 
+In our effort to create a Part-of-Speech (PoS) tagging system for Aromanian using Romanian models, we encountered significant challenges due to the linguistic differences between the two languages. Although closely related, Aromanian and Romanian have distinct vocabulary, syntax, and false friends—similar-looking words with different meanings—making a direct transfer of PoS tags inefficient.
+
+We began by aligning Aromanian and Romanian texts using techniques like Levenshtein distance and word embeddings. However, these models struggled to accurately map words and tags due to the variations in sentence structure and expression between the two languages. Statistical models like Giza++ and eflomal improved alignment but still fell short in precision.
+
+To address this, we used resources like the Aromanian dictionary by Tache Papahagi to refine PoS tagging where automatic alignment failed. Despite the limited data, we trained a Hidden Markov Model (HMM) to generalize PoS tagging for new Aromanian text. While the model is far from perfect, it provided a foundation for further development and demonstrated that adapting Romanian PoS models for Aromanian requires significant linguistic adjustments.
+
+
 ### Dataset
 We used a parallel dataset of fairy tales in both languages and an Aromanian-Romanian dictionary as sources of data. While the dataset consists of parallel sentences in both languages, a significant number of them are a combination of literal and free translation. The meaning is retained, even though the words or expressions might not be the best matches between the two languages. Additionally, there are grammatical differences, such as the positioning of parts of speech.
 
