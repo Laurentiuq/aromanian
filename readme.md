@@ -28,12 +28,19 @@ We then created a dictionary of words to facilitate future work. The dictionary 
 ### Similarity Measures
 In addition to direct translations, we added methods to the dictionary for obtaining similar words based on Levenshtein distance or other metrics such as Euclidean and Cosine distances between the Romanian word and its Aromanian counterpart.
 
-### Graph-Based Translation
-Later, we constructed a graph-based database using this dictionary. The database contains three types of nodes: Romanian sentences, their Aromanian translations, and words that appear in the sentences, along with their translations and parts of speech.
+### Graph-Based RAG Translation [^6]
+Retrieval-Augmented Generation (RAG) is a technique that enhances language models by combining them with a retrieval mechanism. This approach uses external data sources, such as databases or graphs, to generate more accurate responses by fetching relevant information based on a query. For our project, we applied a graph-based database to assist with the translation of Aromanian to Romanian.
+
+We constructed a graph with three types of nodes: Romanian sentences, Aromanian translations, and words appearing in both languages. The relationship between Romanian and Aromanian sentences is represented by a "translates_to" link. Each Aromanian word in a sentence has a relationship of "appear_in" that connects it to the corresponding sentence node.
+
+Each Aromanian word node is enriched with several attributes: its part of speech, its translation into Romanian (from a dictionary), and a similarity score if the translation is not an exact match. The similarity score helps measure how closely the Aromanian word corresponds to a Romanian word, accounting for potential variations that are not directly found in the dictionary. This graph-based approach allows for more flexible and accurate translations by considering sentence structure, word alignment, and linguistic similarities across both languages.
 
 When a new sentence is proposed for translation, it is split into words. The graph database searches for these words or, if they don't exist, for similar words. The corresponding sentence nodes are retrieved, along with other words in those sentences. These nodes and the information they contain are assembled into a prompt that can be well-understood by LLMs to translate new input.
 
 While lexically the results were similar to the correct translation, they often differed fundamentally in meaning. (To do: Add examples from notebooks).
+
+![RAG_image](https://github.com/user-attachments/assets/7d813110-a683-40a6-a46d-3cfe1bed86cf)
+
 
 ### Tested Models
 We tested several models, including GPT-3.5 Turbo, GPT-4, GPT-4o, and GPT-4o-mini. GPT-4o yielded the best results, but it seems that the LLM had some minimal prior knowledge about Aromanian.
@@ -80,3 +87,6 @@ Despite some promising results, the models still have room for improvement, espe
 [^4]: David Dale. *How to Fine-Tune a NLLB-200 Model for Translating a New Language*. Medium, July 6, 2023. [Link to article](https://cointegrated.medium.com/how-to-fine-tune-a-nllb-200-model-for-translating-a-new-language-a37fc706b865).
 
 [^5]: Tanzer, Garrett, Mirac Suzgun, Eline Visser, Dan Jurafsky, and Luke Melas-Kyriazi. *A Benchmark for Learning to Translate a New Language from One Grammar Book*. 2024. [arXiv:2309.16575](https://arxiv.org/abs/2309.16575).
+
+[^6]: NVIDIA. What Is Retrieval-Augmented Generation (RAG). NVIDIA Blog, October 20, 2023. [Link to article](https://blogs.nvidia.com/blog/what-is-retrieval-augmented-generation/). 
+
