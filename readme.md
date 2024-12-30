@@ -48,7 +48,7 @@ While lexically the results were similar to the correct translation, they often 
 We tested several models, including GPT-3.5 Turbo, GPT-4, GPT-4o, and GPT-4o-mini. GPT-4o yielded the best results, but it seems that the LLM had some minimal prior knowledge about Aromanian.
 
 ### NLLB Approach [^3]
-Next, we used NLLB models, which offered the best results overall. The dataset was modified to be more granular, with sentences extracted from the parallel dataset. The model was trained in both directions (ro→rup and rup→ro) [^4]. Sentences exceeding 1000 tokens were excluded from training. The model was trained for 20,000 steps on a dataset consisting of 27,000 training examples, 95% of which were dictionary words, while the remaining 5% were sentences. 
+Next, we used NLLB models, which offered the best results overall. The dataset was modified to be more granular, with sentences extracted from the parallel dataset. The model was trained in both directions (ro→rup and rup→ro) [^4]. Sentences exceeding 1000 tokens were excluded from training. The model was trained for 20,000 steps on a dataset consisting of 27,000 training examples, 92% of which were dictionary words, while the remaining 8% were sentences. 
 
 For testing, we used a dataset with a higher proportion of sentences (about 10%). 
 
